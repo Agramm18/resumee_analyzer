@@ -7,6 +7,11 @@ it calculates a matching score.
 
 **Requirements:**
 
+**Notice**
+Only PDF data will be accepted and analysed
+
+
+**Libaries and Coding Languages**
 * Python 3
 * The following libraries:
 
