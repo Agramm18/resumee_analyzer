@@ -1,0 +1,14 @@
+**This project was started on May 5, 2025.**
+
+It is a resume analyzer that processes PDF resumes.
+Based on the candidate’s skills, work experience, project experience, and academic degrees
+
+it calculates a matching score.
+
+**Requirements:**
+
+* Python 3
+* The following libraries:
+
+  * pip
+  * PyQt6
