@@ -1,4 +1,4 @@
-**This project was started on May 5, 2025.**
+**This project was started on May 13, 2025.**
 
 It is a resume analyzer that processes PDF resumes.
 Based on the candidate’s skills, work experience, project experience, and academic degrees
@@ -17,3 +17,21 @@ Only PDF data will be accepted and analysed
 
   * pip
   * PyQt6
+  * pdfplumber
+
+
+**Planed features in the feature**
+* GUI
+  - Drag & Drop function
+  - Loading status per Loading bar animation
+  - Matching Score output
+  - Input field for the URL from the Job advertisement
+
+* PDF Analytic
+ - More organized output structure like the pdf
+
+* ML & AI
+ - Matchingscore calculation based on the Resume and job advertisment
+ - Matchingscore calculation based on the skills from the job candidate
+  - The calculation will be based from the work experience, universal degreees, codign languages, soft & hard skills, spooken languages by the candidate, project experience
+  
