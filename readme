@@ -1,37 +1,77 @@
-**This project was started on May 13, 2025.**
+**Resume Analyzer**
 
-It is a resume analyzer that processes PDF resumes.
-Based on the candidate’s skills, work experience, project experience, and academic degrees
+**Project Start Date:** May 13, 2025
 
-it calculates a matching score.
+This project is a resume analyzer that processes PDF resumes and evaluates how well they match a given job advertisement. It calculates a **matching score** based on:
 
-**Requirements:**
+* Skills
+* Work experience
+* Project involvement
+* Academic qualifications
 
-**Notice**
-Only PDF data will be accepted and analysed
+---
 
+**⚙️ Requirements**
 
-**Libaries and Coding Languages**
+* German job advertisements (support for English ads was added later)
+* Resume in **PDF format only**
+
+> 📌 **Note:** Only PDF files are accepted and analyzed.
+
+---
+
+**🧰 Technologies Used**
+
+**Programming Language:**
+
 * Python 3
-* The following libraries:
 
-  * pip
-  * PyQt6
-  * pdfplumber
+**Key Libraries:**
 
+* pip
+* PyQt6
+* pdfplumber
 
-**Planed features in the feature**
-* GUI
-  - Drag & Drop function
-  - Loading status per Loading bar animation
-  - Matching Score output
-  - Input field for the URL from the Job advertisement
+---
 
-* PDF Analytic
- - More organized output structure like the pdf
+**🔮 Planned Features**
 
-* ML & AI
- - Matchingscore calculation based on the Resume and job advertisment
- - Matchingscore calculation based on the skills from the job candidate
-  - The calculation will be based from the work experience, universal degreees, codign languages, soft & hard skills, spooken languages by the candidate, project experience
-  
+**GUI**
+
+* Drag & Drop functionality for uploading resumes
+* Progress bar for visual feedback while loading
+* Display of the calculated matching score
+* Input field for the job advertisement URL
+
+**PDF Analysis**
+
+* Improved and structured output resembling the original PDF layout
+
+**Machine Learning & AI**
+
+* Matching score calculation based on resume-job advertisement compatibility
+* Matching score refined through:
+
+  * Work experience
+  * Academic qualifications (e.g., Bachelor's, Master's)
+  * Programming languages
+  * Soft and hard skills
+  * Language proficiency
+  * Project experience
+
+---
+
+**🧠 How It Works**
+
+1. Find a job advertisement.
+2. Paste the advertisement text into the input field.
+3. Drag and drop your resume (PDF) into the designated area.
+4. The built-in NLP-based AI analyzes both the job ad and your resume.
+5. A **matching score** is calculated based on:
+
+   * Academic background (school and university degrees)
+   * Professional experience
+   * Project involvement
+   * Known programming languages
+   * Soft & hard skills
+   * Spoken languages
