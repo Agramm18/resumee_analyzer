@@ -56,6 +56,7 @@ class MainWindow(QMainWindow):
         job_advertisment.setFixedHeight(50)
         layout.addWidget(job_advertisment)
 
+        #send button for api and calculation logic
         send_job_btn = QPushButton(
             icon=QIcon("send_icon.svg"),
             text="Send to AI",
@@ -76,8 +77,7 @@ class MainWindow(QMainWindow):
                                         background-color: blue;
                                         color: white;
                                    }
-
-                                   Q
+                                   
                                    """)
         send_job_btn.setContentsMargins(0, 25, 0, 0)
         layout.addWidget(send_job_btn)
