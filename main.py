@@ -9,10 +9,12 @@ class MainWindow(QMainWindow):
 
         # Configure main window
         self.setWindowTitle("Resume Analyzer")
-        self.setFixedSize(QSize(500, 500))
+        self.setFixedSize(QSize(800, 800))
 
         central_widget = QWidget()
         layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(15)
 
         #Welcome text
         gui_title = QLabel("Welcome to my resumee analyzer")
@@ -20,20 +22,7 @@ class MainWindow(QMainWindow):
         font.setPointSize(20)
         gui_title.setFont(font)
         gui_title.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
-        gui_title.setContentsMargins(0, 5, 0, 0)
         layout.addWidget(gui_title)
-
-        #input field for job advertisment
-        job_advertisment = QLineEdit(parent=self)
-        layout.addWidget(job_advertisment)
-
-        sub_text = QLabel("Please paste in a job advertisement")
-        font = sub_text.font()
-        font.setPointSize(15)
-        sub_text.setFont(font)
-        sub_text.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
-        sub_text.setContentsMargins(0, 10, 0, 0)
-        layout.addWidget(sub_text)
         
         # drag & drop field for the resume
         label_title = QLabel("Drag the resume here")
@@ -41,7 +30,6 @@ class MainWindow(QMainWindow):
         font.setPointSize(15)
         label_title.setFont(font)
         label_title.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
-        label_title.setContentsMargins(0, 10, 0, 0)
         label_title.setStyleSheet("""
                         QLabel {
                                   border: 2px solid white;
@@ -51,6 +39,21 @@ class MainWindow(QMainWindow):
                                   }
                                   """)
         layout.addWidget(label_title)
+
+        sub_text = QLabel("Please paste in a job advertisement")
+        font = sub_text.font()
+        font.setPointSize(15)
+        sub_text.setFont(font)
+        sub_text.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        layout.addWidget(sub_text)
+
+        #input field for job advertisment
+        job_advertisment = QLineEdit(parent=self)
+        layout.addWidget(job_advertisment)
+
+        send_button = 
+
+
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
