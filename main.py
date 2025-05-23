@@ -1,11 +1,13 @@
 # Basic imports for the required PyQt6 libraries and system access
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLayout, QLineEdit
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLayout, QLineEdit, QPushButton
 from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtGui import QIcon
+
 import sys
 
 class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         # Configure main window
         self.setWindowTitle("Resume Analyzer")
@@ -51,7 +53,14 @@ class MainWindow(QMainWindow):
         job_advertisment = QLineEdit(parent=self)
         layout.addWidget(job_advertisment)
 
-        send_button = 
+        send_job_btn = QPushButton(
+            icon=QIcon("send_icon.svg"),
+            text="Send to AI",
+            parent=self
+        )
+        send_job_btn.setFixedSize(150, 50)
+        send_job_btn.setIconSize(QSize(50, 50))
+        layout.addWidget(send_job_btn)
 
 
 
