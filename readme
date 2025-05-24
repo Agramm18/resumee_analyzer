@@ -35,8 +35,14 @@
 
       - On Linux:
             python3 -m venv venv
+            source venv/bin/activate
+
+      - On windows:
+            python -m venv venv
+            venv\Scripts\activate
 
   **🧱 Architecture Overview**
+  
     GUI (PyQt6)
     │
     ├── Input: Job advertisement text + PDF resume (drag & drop)
