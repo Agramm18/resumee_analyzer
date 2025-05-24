@@ -1,77 +1,114 @@
-**Resume Analyzer**
+# **Resume Analyzer**
 
-**Project Start Date:** May 13, 2025
+**📅 Project Start Date:** May 13, 2025
+**🛠 Programming Language:** Python 3
 
-This project is a resume analyzer that processes PDF resumes and evaluates how well they match a given job advertisement. It calculates a **matching score** based on:
+## 🔧 Requirements
 
-* Skills
+* Only **PDF** documents are supported
+* Only **German**-language PDFs are currently supported
+* **Python 3** must be installed
+* A **virtual environment** is strongly recommended
+
+---
+
+## 📦 Required Python Libraries
+
+Install the following libraries using `pip` inside your virtual environment:
+
+```bash
+pip install pdfplumber
+pip install pyqt6
+pip install spacy
+```
+
+Download the necessary spaCy language models:
+
+# German language model
+python -m spacy download de_dep_news_trf
+
+# English language model (optional, for future use)
+python -m spacy download en_core_web_trf
+```
+
+---
+
+## 🚀 Installation Guide
+
+1. Download and install the latest version of Python from
+   [https://www.python.org](https://www.python.org)
+2. Set up a virtual environment on your system:
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Agramm18/resumee_analyzer.git
+   cd resumee_analyzer
+   ```
+
+---
+
+## 🧱 Architecture Overview
+
+```
+GUI (PyQt6)
+│
+├── Input: Job advertisement text + PDF resume (drag & drop)
+│
+↓
+Internal API Layer
+│
+├── Routes data from GUI to core modules
+│
+↓
+PDF Reader (pdfplumber)
+│
+├── Extracts text from uploaded resume PDF
+│
+↓
+Resume NLP Processor (spaCy)
+│
+├── Analyzes resume content: skills, experience, education, languages
+│
+↓
+Job Ad NLP Processor (spaCy)
+│
+├── Analyzes job ad text: keywords, requirements
+│
+↓
+AI Matching Engine (later: numpy, scikit-learn)
+├── Compares both data sources
+└── Calculates a matching score
+```
+
+---
+
+## 🧪 How to Use
+
+1. Paste the job advertisement text into the input field.
+2. Drag & drop your resume PDF into the upload area.
+3. The AI analyzes both inputs and calculates a **matching score**.
+4. View your **match result** to assess your fit for the job.
+
+---
+
+## ⚙️ How the Matching Score is Calculated
+
+The score is computed based on content alignment between your resume and the job ad:
+
+### 🔍 From Resume:
+
+* Programming and technical skills
+* Language proficiencies
 * Work experience
-* Project involvement
-* Academic qualifications
+* Academic qualifications (school/university degrees)
+* Hard and soft skills
+* Portfolio or project experience
 
----
+### 📋 From Job Advertisement:
 
-**⚙️ Requirements**
-
-* German job advertisements (support for English ads was added later)
-* Resume in **PDF format only**
-
-> 📌 **Note:** Only PDF files are accepted and analyzed.
-
----
-
-**🧰 Technologies Used**
-
-**Programming Language:**
-
-* Python 3
-
-**Key Libraries:**
-
-* pip
-* PyQt6
-* pdfplumber
-
----
-
-**🔮 Planned Features**
-
-**GUI**
-
-* Drag & Drop functionality for uploading resumes
-* Progress bar for visual feedback while loading
-* Display of the calculated matching score
-* Input field for the job advertisement URL
-
-**PDF Analysis**
-
-* Improved and structured output resembling the original PDF layout
-
-**Machine Learning & AI**
-
-* Matching score calculation based on resume-job advertisement compatibility
-* Matching score refined through:
-
-  * Work experience
-  * Academic qualifications (e.g., Bachelor's, Master's)
-  * Programming languages
-  * Soft and hard skills
-  * Language proficiency
-  * Project experience
-
----
-
-**🧠 How It Works**
-
-1. Find a job advertisement.
-2. Paste the advertisement text into the input field.
-3. Drag and drop your resume (PDF) into the designated area.
-4. The built-in NLP-based AI analyzes both the job ad and your resume.
-5. A **matching score** is calculated based on:
-
-   * Academic background (school and university degrees)
-   * Professional experience
-   * Project involvement
-   * Known programming languages
-   * Soft & hard skills
-   * Spoken languages
+* Explicitly required qualifications, skills, and experience
