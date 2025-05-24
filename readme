@@ -9,6 +9,21 @@
   * Only **German**-language PDFs are currently supported
   * **Python 3** must be installed
   * A **virtual environment** is strongly recommended
+  
+**🚀 Installation Guide**
+
+  1. Download and install the latest version of Python from
+    [https://www.python.org](https://www.python.org)
+
+  2. Set up a virtual environment on your system:
+
+      - On Linux:
+            python3 -m venv venv
+            source venv/bin/activate
+
+      - On windows:
+            python -m venv venv
+            venv\Scripts\activate
 
 **📦 Required Python Libraries**
 
@@ -25,21 +40,6 @@
 
     English language model (optional, for future use)
     - python -m spacy download en_core_web_trf
-
-**🚀 Installation Guide**
-
-  1. Download and install the latest version of Python from
-    [https://www.python.org](https://www.python.org)
-
-  2. Set up a virtual environment on your system:
-
-      - On Linux:
-            python3 -m venv venv
-            source venv/bin/activate
-
-      - On windows:
-            python -m venv venv
-            venv\Scripts\activate
 
   **🧱 Architecture Overview**
   
