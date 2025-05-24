@@ -1,114 +1,91 @@
-# **Resume Analyzer**
+**Resume Analyzer**
 
-**📅 Project Start Date:** May 13, 2025
-**🛠 Programming Language:** Python 3
+  **📅 Project Start Date:** May 13, 2025
+  **🛠 Programming Language:** Python 3
 
-## 🔧 Requirements
+**🔧 Requirements**
 
-* Only **PDF** documents are supported
-* Only **German**-language PDFs are currently supported
-* **Python 3** must be installed
-* A **virtual environment** is strongly recommended
+  * Only **PDF** documents are supported
+  * Only **German**-language PDFs are currently supported
+  * **Python 3** must be installed
+  * A **virtual environment** is strongly recommended
 
----
+**📦 Required Python Libraries**
 
-## 📦 Required Python Libraries
+  Install the following libraries using `pip` inside your virtual environment:
 
-Install the following libraries using `pip` inside your virtual environment:
+    - pip install pdfplumber
+    - pip install pyqt6
+    - pip install spacy
 
-```bash
-pip install pdfplumber
-pip install pyqt6
-pip install spacy
-```
+  Download the necessary spaCy language models:
 
-Download the necessary spaCy language models:
+    German language model
+    - python -m spacy download de_dep_news_trf
 
-# German language model
-python -m spacy download de_dep_news_trf
+    English language model (optional, for future use)
+    - python -m spacy download en_core_web_trf
 
-# English language model (optional, for future use)
-python -m spacy download en_core_web_trf
-```
+**🚀 Installation Guide**
 
----
+  1. Download and install the latest version of Python from
+    [https://www.python.org](https://www.python.org)
 
-## 🚀 Installation Guide
+  2. Set up a virtual environment on your system:
 
-1. Download and install the latest version of Python from
-   [https://www.python.org](https://www.python.org)
-2. Set up a virtual environment on your system:
+      - On Linux:
+            python3 -m venv venv
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Clone the repository:
+  **🧱 Architecture Overview**
+    GUI (PyQt6)
+    │
+    ├── Input: Job advertisement text + PDF resume (drag & drop)
+    │
+    ↓
+    Internal API Layer
+    │
+    ├── Routes data from GUI to core modules
+    │
+    ↓
+    PDF Reader (pdfplumber)
+    │
+    ├── Extracts text from uploaded resume PDF
+    │
+    ↓
+    Resume NLP Processor (spaCy)
+    │
+    ├── Analyzes resume content: skills, experience, education, languages
+    │
+    ↓
+    Job Ad NLP Processor (spaCy)
+    │
+    ├── Analyzes job ad text: keywords, requirements
+    │
+    ↓
+    AI Matching Engine (later: numpy, scikit-learn)
+    ├── Compares both data sources
+    └── Calculates a matching score
 
-   ```bash
-   git clone https://github.com/Agramm18/resumee_analyzer.git
-   cd resumee_analyzer
-   ```
+**🧪 How to Use**
 
----
+  1. Paste the job advertisement text into the input field.
+  2. Drag & drop your resume PDF into the upload area.
+  3. The AI analyzes both inputs and calculates a matching score.
+  4. View your match result to assess your fit for the job.
 
-## 🧱 Architecture Overview
+**⚙️ How the Matching Score is Calculated**
 
-```
-GUI (PyQt6)
-│
-├── Input: Job advertisement text + PDF resume (drag & drop)
-│
-↓
-Internal API Layer
-│
-├── Routes data from GUI to core modules
-│
-↓
-PDF Reader (pdfplumber)
-│
-├── Extracts text from uploaded resume PDF
-│
-↓
-Resume NLP Processor (spaCy)
-│
-├── Analyzes resume content: skills, experience, education, languages
-│
-↓
-Job Ad NLP Processor (spaCy)
-│
-├── Analyzes job ad text: keywords, requirements
-│
-↓
-AI Matching Engine (later: numpy, scikit-learn)
-├── Compares both data sources
-└── Calculates a matching score
-```
+  The score is computed based on content alignment between your resume and the job ad:
 
----
+  🔍 From Resume:
 
-## 🧪 How to Use
+    * Programming and technical skills
+    * Language proficiencies
+    * Work experience
+    * Academic qualifications (school/university degrees)
+    * Hard and soft skills
+    * Portfolio or project experience
 
-1. Paste the job advertisement text into the input field.
-2. Drag & drop your resume PDF into the upload area.
-3. The AI analyzes both inputs and calculates a **matching score**.
-4. View your **match result** to assess your fit for the job.
+  📋 From Job Advertisement:
 
----
-
-## ⚙️ How the Matching Score is Calculated
-
-The score is computed based on content alignment between your resume and the job ad:
-
-### 🔍 From Resume:
-
-* Programming and technical skills
-* Language proficiencies
-* Work experience
-* Academic qualifications (school/university degrees)
-* Hard and soft skills
-* Portfolio or project experience
-
-### 📋 From Job Advertisement:
-
-* Explicitly required qualifications, skills, and experience
+    * Explicitly required qualifications, skills, and experience
