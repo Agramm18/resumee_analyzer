@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         sub_text.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
         layout.addWidget(sub_text)
 
-        #input field for job advertisment
+        #input field for job return job_advertismentadvertisment
         job_advertisment = QLineEdit(parent=self)
         job_advertisment.setStyleSheet("""
                                     QLineEdit {
@@ -56,6 +56,17 @@ class MainWindow(QMainWindow):
         job_advertisment.setFixedHeight(50)
         layout.addWidget(job_advertisment)
 
+        #Send button for logic
+        collect_btn = QPushButton(
+            text="Collect Data",
+            parent=self
+        )
+        collect_btn.setFixedSize(150, 50)
+        collect_btn.setContentsMargins(0, 25, 0, 0)
+        collect_btn.setCheckable(True)
+        collect_btn.clicked.connect(self.get_job_data)
+        layout.addWidget(collect_btn)
+
         #send button for api and calculation logic
         send_job_btn = QPushButton(
             icon=QIcon("send_icon.svg"),
@@ -64,28 +75,18 @@ class MainWindow(QMainWindow):
         )
         send_job_btn.setFixedSize(150, 50)
         send_job_btn.setIconSize(QSize(50, 50))
-        send_job_btn.setStyleSheet("""
-                                   QPushButton {
-                                        border: 2px solid white;
-                                        border-radius: 15px;
-                                        padding: 15px;
-                                        background-color: white;
-                                        color: black;
-                                   }
-
-                                   QPushButton:hover {
-                                        background-color: blue;
-                                        color: white;
-                                   }
-                                   
-                                   """)
         send_job_btn.setContentsMargins(0, 25, 0, 0)
+        send_job_btn.setCheckable(True)
         layout.addWidget(send_job_btn)
-
-
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+
+    def get_job_data(self, job_data):
+        
+        pass
+
+
 
 # Application setup and launch
 app = QApplication(sys.argv)
