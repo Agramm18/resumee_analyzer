@@ -3,7 +3,43 @@ from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLay
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
 
+
 import sys
+
+class DragAndDropField(QLabel):
+    def __init__(self):
+        super().__init__()
+        self.setText("Drag your pdf file here")
+        self.setStyleSheet("border: 2px dashed #aaa; padding: 20px;")
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.setAcceptDrops(True)
+        self.file_path = None
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+
+            for url in event.mimeData().urls():
+                if url.toLocalFile().lower().endswith('.pdf'):
+                    event.acceptProposedAction()
+                    return
+        event.ignore()
+    
+    def dropEvent(self, event):
+        if event.mimeData().hasUrls():
+            pdf_path = [url.toLocalFile() for url in event.mimeData().urls()
+                         if url.toLocalFile().lower().endswith('.pdf')]
+
+            if pdf_path:
+                self.file_path = pdf_path
+                self.setText("PDF File: \n" + "\n".join(pdf_path))
+                print("Dropped pdf file", pdf_path)
+
+            else:
+                self.setText("Only pdf files are allowed")
+    
+    def collect_path(self):
+        resume_path = self.file_path
+        return resume_path
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -12,6 +48,7 @@ class MainWindow(QMainWindow):
         # Configure main window
         self.setWindowTitle("Resume Analyzer")
         self.setFixedSize(QSize(800, 800))
+        
 
         central_widget = QWidget()
         layout = QVBoxLayout()
@@ -26,15 +63,21 @@ class MainWindow(QMainWindow):
         gui_title.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
         gui_title.setContentsMargins(0, 25, 0, 0)
         layout.addWidget(gui_title)
+
+        #Drag and Drop field
+        drag_drop_field = DragAndDropField()
+        layout.addWidget(drag_drop_field)
+
+        collect_pdf_btn = QPushButton(
+            text="Collect PDF file",
+            parent=self
+        )
+        collect_pdf_btn.setFixedSize(150, 50)
+        collect_pdf_btn.setContentsMargins(0, 25, 0, 0)
+        collect_pdf_btn.setCheckable(True)
+        collect_pdf_btn.clicked.connect(self.collect_resume_path)
         
-        # drag & drop field for the resume
-        label_title = QLabel("Drag the resume here")
-        font = label_title.font()
-        font.setPointSize(15)
-        label_title.setFont(font)
-        label_title.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
-        label_title.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(label_title)
+        layout.addWidget(collect_pdf_btn)
 
         sub_text = QLabel("Please paste in a job advertisement")
         font = sub_text.font()
@@ -75,18 +118,25 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
     #Button Logic
+
+    #collect the pdf from drag & drop for pdfplumber
+    def collect_resume_path():
+        pass
+
     def get_job_data(self):
         job_advertisment = self.job_advertisment.text()
         print(f"The job is: {job_advertisment}")
 
+    #data collection logic for api and ai
     def collect_data(self):
         print("\n")
         job_advertisment_data = self.job_advertisment.text()
-        resume = print("Working")
+        resume = print("")
 
         try:
             if job_advertisment_data or resume is not None:
                 print(f"Job data: {job_advertisment_data} Resume data: {resume} \n")
+                print("Code logic is working")
                 print("Data is collected and will send to my ai")
 
             else:
