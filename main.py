@@ -54,40 +54,47 @@ class MainWindow(QMainWindow):
                                        """)
         job_advertisment.setFixedWidth(750)
         job_advertisment.setFixedHeight(50)
+        job_advertisment.setPlaceholderText("Please paste in a job advertisment")
+        self.job_advertisment = job_advertisment
         layout.addWidget(job_advertisment)
 
-        #Send button for logic
-        collect_btn = QPushButton(
-            text="Collect Data",
-            parent=self
-        )
-        collect_btn.setFixedSize(150, 50)
-        collect_btn.setContentsMargins(0, 25, 0, 0)
-        collect_btn.setCheckable(True)
-        collect_btn.clicked.connect(self.get_job_data)
-        layout.addWidget(collect_btn)
-
         #send button for api and calculation logic
-        send_job_btn = QPushButton(
+        collect_data_btn = QPushButton(
             icon=QIcon("send_icon.svg"),
             text="Send to AI",
             parent=self
         )
-        send_job_btn.setFixedSize(150, 50)
-        send_job_btn.setIconSize(QSize(50, 50))
-        send_job_btn.setContentsMargins(0, 25, 0, 0)
-        send_job_btn.setCheckable(True)
-        layout.addWidget(send_job_btn)
+        collect_data_btn.setFixedSize(150, 50)
+        collect_data_btn.setIconSize(QSize(50, 50))
+        collect_data_btn.setContentsMargins(0, 25, 0, 0)
+        collect_data_btn.setCheckable(True)
+        collect_data_btn.clicked.connect(self.collect_data)
+        layout.addWidget(collect_data_btn)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-    def get_job_data(self, job_data):
-        
-        pass
+    #Button Logic
+    def get_job_data(self):
+        job_advertisment = self.job_advertisment.text()
+        print(f"The job is: {job_advertisment}")
 
+    def collect_data(self):
+        print("\n")
+        job_advertisment_data = self.job_advertisment.text()
+        resume = print("Working")
 
+        try:
+            if job_advertisment_data or resume is not None:
+                print(f"Job data: {job_advertisment_data} Resume data: {resume} \n")
+                print("Data is collected and will send to my ai")
 
+            else:
+                raise ValueError("Invalid data where found")
+            
+        except ValueError as e:
+            print(e)
+    
 # Application setup and launch
 app = QApplication(sys.argv)
 window = MainWindow()
