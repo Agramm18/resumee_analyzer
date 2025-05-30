@@ -25,21 +25,26 @@ class DragAndDropField(QLabel):
         event.ignore()
     
     def dropEvent(self, event):
-        if event.mimeData().hasUrls():
-            pdf_path = [url.toLocalFile() for url in event.mimeData().urls()
-                         if url.toLocalFile().lower().endswith('.pdf')]
+        try:
+            if event.mimeData().hasUrls():
+                pdf_path = [url.toLocalFile() for url in event.mimeData().urls()
+                            if url.toLocalFile().lower().endswith('.pdf')]
 
-            if pdf_path:
-                self.file_path = pdf_path
-                self.setText("PDF File: \n" + "\n".join(pdf_path))
-                print("Dropped pdf file", pdf_path)
+                if pdf_path:
+                    self.file_path = pdf_path[0]
+                    self.setText("PDF File: \n" + "\n".join(pdf_path))
+                    print("Dropped pdf file", pdf_path)
+                    
+                else:
+                    self.setText("Only pdf files are allowed")
 
-            else:
-                self.setText("Only pdf files are allowed")
+        except (ValueError, TypeError) as e:
+            print(f"There is a Error in data Collection: {e}")
     
+    #Collect the file path for logic
     def collect_path(self):
-        resume_path = self.file_path
-        return resume_path
+        print(f"The file path from the drag enter event is: {self.file_path}")
+        return self.file_path
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -65,9 +70,10 @@ class MainWindow(QMainWindow):
         layout.addWidget(gui_title)
 
         #Drag and Drop field
-        drag_drop_field = DragAndDropField()
-        layout.addWidget(drag_drop_field)
+        self.drag_drop_field = DragAndDropField()
+        layout.addWidget(self.drag_drop_field)
 
+        #PDF button to send the file to the converter
         collect_pdf_btn = QPushButton(
             text="Collect PDF file",
             parent=self
@@ -120,31 +126,42 @@ class MainWindow(QMainWindow):
     #Button Logic
 
     #collect the pdf from drag & drop for pdfplumber
-    def collect_resume_path():
-        pass
+    def collect_resume_path(self):
+        resume_path = self.drag_drop_field.collect_path()
+        print(f"The resume path is: {resume_path}")
+        self.resume_path = resume_path
 
     def get_job_data(self):
         job_advertisment = self.job_advertisment.text()
         print(f"The job is: {job_advertisment}")
 
+
     #data collection logic for api and ai
     def collect_data(self):
         print("\n")
         job_advertisment_data = self.job_advertisment.text()
-        resume = print("")
+        resume_path = self.resume_path
 
         try:
-            if job_advertisment_data or resume is not None:
-                print(f"Job data: {job_advertisment_data} Resume data: {resume} \n")
+            if job_advertisment_data and resume_path is not None:
+                print(f"The job advertisment is: {job_advertisment_data} and the resume path is {resume_path}")
                 print("Code logic is working")
-                print("Data is collected and will send to my ai")
+                print("Data is collected and will be send to my ai")
 
+            elif not job_advertisment_data:
+                raise ValueError("No job advertisment data are found please paste in a job advertisment")
+            
+            elif not resume_path:
+                raise ValueError("Pleas drag an pdf file in the drag and drop field")
+            
             else:
-                raise ValueError("Invalid data where found")
+                raise ValueError("Invalid data are found")
             
         except ValueError as e:
-            print(e)
-    
+            print(f"The error is: {e}")
+            print("Please follow the instructions and continue")
+            return
+
 # Application setup and launch
 app = QApplication(sys.argv)
 window = MainWindow()
