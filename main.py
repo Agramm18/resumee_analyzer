@@ -131,6 +131,7 @@ class MainWindow(QMainWindow):
         print(f"The resume path is: {resume_path}")
         self.resume_path = resume_path
 
+    #Collect the job advertisment from the input field
     def get_job_data(self):
         job_advertisment = self.job_advertisment.text()
         print(f"The job is: {job_advertisment}")
@@ -148,14 +149,22 @@ class MainWindow(QMainWindow):
                 print("Code logic is working")
                 print("Data is collected and will be send to my ai")
 
+            
+            elif not resume_path and not job_advertisment_data:
+                raise ValueError("There are no date found please drag a pdf file in the drag and drop field and paste in a jobadvertisment in the input field")
+
             elif not job_advertisment_data:
                 raise ValueError("No job advertisment data are found please paste in a job advertisment")
-            
+
             elif not resume_path:
                 raise ValueError("Pleas drag an pdf file in the drag and drop field")
             
+            elif not resume_path and job_advertisment_data:
+                raise ValueError("There is no job advertisment or pdf file path please add both and continue")
+            
             else:
-                raise ValueError("Invalid data are found")
+                raise ValueError("Unknown error occurred. Check the README or terminal output.")
+
             
         except ValueError as e:
             print(f"The error is: {e}")
