@@ -2,6 +2,8 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLayout, QLineEdit, QPushButton
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
+from api_data import resume_data
+import pdfplumber
 
 
 import sys
@@ -33,7 +35,6 @@ class DragAndDropField(QLabel):
                 if pdf_path:
                     self.file_path = pdf_path[0]
                     self.setText("PDF File: \n" + "\n".join(pdf_path))
-                    print("Dropped pdf file", pdf_path)
                     
                 else:
                     self.setText("Only pdf files are allowed")
@@ -128,26 +129,33 @@ class MainWindow(QMainWindow):
     #collect the pdf from drag & drop for pdfplumber
     def collect_resume_path(self):
         resume_path = self.drag_drop_field.collect_path()
+
         print(f"The resume path is: {resume_path}")
         self.resume_path = resume_path
 
+        print("The PDF File will be converted")
+        self.convert_pdf()
+
+        return self.resume_path
+
     #Collect the job advertisment from the input field
     def get_job_data(self):
-        job_advertisment = self.job_advertisment.text()
-        print(f"The job is: {job_advertisment}")
-
-
+        self.job_advertisment = self.job_advertisment.text()
+        print(f"The job is: {self.job_advertisment}")
+        return self.job_advertisment
+    
     #data collection logic for api and ai
     def collect_data(self):
         print("\n")
         job_advertisment_data = self.job_advertisment.text()
         resume_path = self.resume_path
-
+        
         try:
             if job_advertisment_data and resume_path is not None:
+
                 print(f"The job advertisment is: {job_advertisment_data} and the resume path is {resume_path}")
                 print("Code logic is working")
-                print("Data is collected and will be send to my ai")
+                print("Data is collected and will be send to my ai \n")
 
             
             elif not resume_path and not job_advertisment_data:
@@ -169,6 +177,27 @@ class MainWindow(QMainWindow):
         except ValueError as e:
             print(f"The error is: {e}")
             print("Please follow the instructions and continue")
+            return
+
+    def convert_pdf(self):
+        file_path = self.resume_path
+
+        try:
+            if not file_path:
+                raise ValueError("There must be a file path so we can continue")
+            
+            else:
+                with pdfplumber.open(file_path) as pdf:
+                    resume_text = ''
+                    for page in pdf.pages:
+                        resume_text += page.extract_text() or '' 
+                        print("File is extracted")
+
+                    self.resume_text = resume_text
+
+        except ValueError as e:
+            print("There is a error in the file path")
+            print(f"The error is: {e}")
             return
 
 # Application setup and launch
