@@ -2,7 +2,6 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLayout, QLineEdit, QPushButton
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
-from api_data import resume_data
 import pdfplumber
 
 
@@ -142,6 +141,9 @@ class MainWindow(QMainWindow):
     def get_job_data(self):
         self.job_advertisment = self.job_advertisment.text()
         print(f"The job is: {self.job_advertisment}")
+
+        self.collect_final_data()
+
         return self.job_advertisment
     
     #data collection logic for api and ai
@@ -156,7 +158,6 @@ class MainWindow(QMainWindow):
                 print(f"The job advertisment is: {job_advertisment_data} and the resume path is {resume_path}")
                 print("Code logic is working")
                 print("Data is collected and will be send to my ai \n")
-
             
             elif not resume_path and not job_advertisment_data:
                 raise ValueError("There are no date found please drag a pdf file in the drag and drop field and paste in a jobadvertisment in the input field")
@@ -179,6 +180,7 @@ class MainWindow(QMainWindow):
             print("Please follow the instructions and continue")
             return
 
+    #PDF Converter
     def convert_pdf(self):
         file_path = self.resume_path
 
@@ -193,12 +195,19 @@ class MainWindow(QMainWindow):
                         resume_text += page.extract_text() or '' 
                         print("File is extracted")
 
-                    self.resume_text = resume_text
+                        self.resume_text = resume_text
+                        self.collect_final_data()
 
         except ValueError as e:
             print("There is a error in the file path")
             print(f"The error is: {e}")
             return
+        
+    #collector for api
+    def collect_final_data(self):
+            job_data = self.job_advertisment
+            resume_text = self.resume_text
+            print("All data are collected")
 
 # Application setup and launch
 app = QApplication(sys.argv)
