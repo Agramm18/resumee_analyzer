@@ -3,10 +3,9 @@ from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QVBoxLay
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
 import pdfplumber
-
-
 import sys
 
+#drag and drop logic
 class DragAndDropField(QLabel):
     def __init__(self):
         super().__init__()
@@ -49,6 +48,8 @@ class DragAndDropField(QLabel):
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.resume_text = None
+        self.job_advertisment = None
 
         # Configure main window
         self.setWindowTitle("Resume Analyzer")
@@ -81,7 +82,7 @@ class MainWindow(QMainWindow):
         collect_pdf_btn.setFixedSize(150, 50)
         collect_pdf_btn.setContentsMargins(0, 25, 0, 0)
         collect_pdf_btn.setCheckable(True)
-        collect_pdf_btn.clicked.connect(self.collect_resume_path)
+        collect_pdf_btn.clicked.connect(self.pdf_extractor)
         
         layout.addWidget(collect_pdf_btn)
 
@@ -109,105 +110,88 @@ class MainWindow(QMainWindow):
 
         #send button for api and calculation logic
         collect_data_btn = QPushButton(
-            icon=QIcon("send_icon.svg"),
-            text="Send to AI",
+            text="Save Job",
             parent=self
         )
         collect_data_btn.setFixedSize(150, 50)
         collect_data_btn.setIconSize(QSize(50, 50))
         collect_data_btn.setContentsMargins(0, 25, 0, 0)
         collect_data_btn.setCheckable(True)
-        collect_data_btn.clicked.connect(self.collect_data)
+        collect_data_btn.clicked.connect(self.get_job_data)
         layout.addWidget(collect_data_btn)
+        
+        #collect all final data
+        save_data = QPushButton(
+            text="Save resume and job-advertisment",
+            parent=self
+        )
+        save_data.setFixedSize(150, 50)
+        save_data.setIconSize(QSize(50, 50))
+        save_data.setContentsMargins(0, 25, 0, 0)
+        save_data.setCheckable(True)
+        save_data.clicked.connect(self.final_output)
+        layout.addWidget(save_data)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
     #Button Logic
 
-    #collect the pdf from drag & drop for pdfplumber
-    def collect_resume_path(self):
-        resume_path = self.drag_drop_field.collect_path()
-
-        print(f"The resume path is: {resume_path}")
-        self.resume_path = resume_path
-
-        print("The PDF File will be converted")
-        self.convert_pdf()
-
-        return self.resume_path
-
-    #Collect the job advertisment from the input field
-    def get_job_data(self):
-        self.job_advertisment = self.job_advertisment.text()
-        print(f"The job is: {self.job_advertisment}")
-
-        self.collect_final_data()
-
-        return self.job_advertisment
-    
-    #data collection logic for api and ai
-    def collect_data(self):
-        print("\n")
-        job_advertisment_data = self.job_advertisment.text()
-        resume_path = self.resume_path
-        
+    #pdf extractor with pdfplumber
+    def pdf_extractor(self):
         try:
-            if job_advertisment_data and resume_path is not None:
-
-                print(f"The job advertisment is: {job_advertisment_data} and the resume path is {resume_path}")
-                print("Code logic is working")
-                print("Data is collected and will be send to my ai \n")
+            resume_path = self.drag_drop_field.collect_path()
             
-            elif not resume_path and not job_advertisment_data:
-                raise ValueError("There are no date found please drag a pdf file in the drag and drop field and paste in a jobadvertisment in the input field")
-
-            elif not job_advertisment_data:
-                raise ValueError("No job advertisment data are found please paste in a job advertisment")
-
-            elif not resume_path:
-                raise ValueError("Pleas drag an pdf file in the drag and drop field")
-            
-            elif not resume_path and job_advertisment_data:
-                raise ValueError("There is no job advertisment or pdf file path please add both and continue")
+            if not resume_path:
+                raise ValueError("There must be an pdf document so we can continue")
             
             else:
-                raise ValueError("Unknown error occurred. Check the README or terminal output.")
-
-            
-        except ValueError as e:
-            print(f"The error is: {e}")
-            print("Please follow the instructions and continue")
-            return
-
-    #PDF Converter
-    def convert_pdf(self):
-        file_path = self.resume_path
-
-        try:
-            if not file_path:
-                raise ValueError("There must be a file path so we can continue")
-            
-            else:
-                with pdfplumber.open(file_path) as pdf:
+                with pdfplumber.open(resume_path) as pdf:
                     resume_text = ''
                     for page in pdf.pages:
-                        resume_text += page.extract_text() or '' 
-                        print("File is extracted")
+                        resume_text += page.extract_text() or ''
 
-                        self.resume_text = resume_text
-                        self.collect_final_data()
+                    print("The pdf file is extracted now")
+                    self.resume_text = resume_text
 
         except ValueError as e:
-            print("There is a error in the file path")
+            print("There is an error in the pdf extraction")
             print(f"The error is: {e}")
             return
+
         
-    #collector for api
-    def collect_final_data(self):
-            job_data = self.job_advertisment
-            resume_text = self.resume_text
-            print("All data are collected")
+    #Jobadvertisment data
+    def get_job_data(self):
+        try:
+            job_data = self.job_advertisment.text()
+            
+            if not job_data:
+                raise ValueError("We neeed an jobadvertisment so we can continue")
+            
+            else:
+                print(f"The job advertisment is: {job_data}")
+                self.job_advertisment = job_data
+
+        except ValueError as e:
+            print("There is an invalid input in the job advertisment")
+            print(f"The error is: {e}")
+            return
+
+    #data collector for api  
+    def final_output(self):
+        if self.job_advertisment and self.resume_text:
+            print("Every value are saved")
+            print("Code Logic is working")
+            print("Scusess!! \n")
+
+            #collect the data for the api
+            from api import getData
+            api_collector = getData(res_text=self.resume_text, job_adv=self.job_advertisment)
+            api_collector.store_pdf()
+            api_collector.store_job_adv()
+
+        else:
+            print("There is somewhere an error")
 
 # Application setup and launch
 app = QApplication(sys.argv)
