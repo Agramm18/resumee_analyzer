@@ -1,7 +1,7 @@
 **Resume Analyzer**
 
   **📅 Project Start Date:** May 13, 2025
-  **🛠 Programming Language:** Python 3
+  **🛠 Programming Languages:** Python3, C++
 
 **🔧 Requirements**
 
@@ -13,7 +13,7 @@
 **🚀 Installation Guide**
 
   1. Download and install the latest version of Python from
-    [https://www.python.org](https://www.python.org)
+    [https://www.python.org]
 
   2. Set up a virtual environment on your system:
 
@@ -41,43 +41,23 @@
     English language model (optional, for future use)
     - python -m spacy download en_core_web_trf
 
-  **🧱 Architecture Overview**
-  
-    GUI (PyQt6)
-    │
-    ├── Input: Job advertisement text + PDF resume (drag & drop)
-    │
-    ↓
-    Internal API Layer
-    │
-    ├── Routes data from GUI to core modules
-    │
-    ↓
-    PDF Reader (pdfplumber)
-    │
-    ├── Extracts text from uploaded resume PDF
-    │
-    ↓
-    Resume NLP Processor (spaCy)
-    │
-    ├── Analyzes resume content: skills, experience, education, languages
-    │
-    ↓
-    Job Ad NLP Processor (spaCy)
-    │
-    ├── Analyzes job ad text: keywords, requirements
-    │
-    ↓
-    AI Matching Engine (later: numpy, scikit-learn)
-    ├── Compares both data sources
-    └── Calculates a matching score
+ **🧱 Architecture Overview**
+
+    GUI 
+    └──> API 
+          ├──> spaCy Module 
+          │     └──> NumPy Module 
+          │            └──> C++ Calculations
+          └──> GUI Output
 
 **🧪 How to Use**
 
-  1. Paste the job advertisement text into the input field.
-  2. Drag & drop your resume PDF into the upload area.
-  3. The AI analyzes both inputs and calculates a matching score.
-  4. View your match result to assess your fit for the job.
+    1. Run api.py
+    2. Drag your PDF file in the drag and drop filed
+    3. Click on the button collect PDF
+    4. Paste in the job advertisment
+    5. Click on the button save jobadvertisment
+    6. Click on Save resume and job advertisment
 
 **⚙️ How the Matching Score is Calculated**
 
@@ -95,3 +75,5 @@
   📋 From Job Advertisement:
 
     * Explicitly required qualifications, skills, and experience
+
+  The actual matching score is computed by a performance-optimized script written in C++.
