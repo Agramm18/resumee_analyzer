@@ -1,0 +1,71 @@
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.env/
+.venv/
+env/
+venv/
+
+# === VSCODE ===
+.vscode/
+
+# === C++ ===
+*.o
+*.obj
+*.so
+*.a
+*.exe
+*.out
+*.dll
+*.log
+*.class
+*.gch
+*.pch
+*.stackdump
+cmake-build-*/
+Makefile
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# === OS SPECIFIC ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.nfs*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === GENERAL IDEs ===
+.idea/
+*.swp
+*.swo
+*.bak
+
+# === LOGS ===
+*.log
+
+# === TEST / COVERAGE ===
+coverage/
+htmlcov/
+*.cover
+*.py,cover
+.cache
+.tox/
+.nox/
+.pytest_cache/
