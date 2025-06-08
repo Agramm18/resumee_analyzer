@@ -1,47 +1,68 @@
-**Resume Analyzer**
 
-  **📅 Project Start Date:** May 13, 2025
-  **🛠 Programming Languages:** Python3, C++
+# 📄 Resume Analyzer
 
-**🔧 Requirements**
+A tool to evaluate how well your resume matches a job advertisement.
 
-  * Only **PDF** documents are supported
-  * Only **German**-language PDFs are currently supported
-  * **Python 3** must be installed
-  * A **virtual environment** is strongly recommended
-  
-**🚀 Installation Guide**
+## 📅 Project Start Date
 
-  1. Download and install the latest version of Python from
-    [https://www.python.org]
+**May 13, 2025**
 
-  2. Set up a virtual environment on your system:
+## 🛠 Programming Languages
+- Python 3  
+- C++
 
-      - On Linux:
-            python3 -m venv venv
-            source venv/bin/activate
+## 📘 Project Description
 
-      - On windows:
-            python -m venv venv
-            venv\Scripts\activate
+**Resume Analyzer** is a tool for job seekers who want to better evaluate their chances before applying for a position.  
+It helps you assess how well your resume matches a specific job advertisement based on content similarities.
 
-**📦 Required Python Libraries**
+This can help you decide whether it’s worth applying — or if it may be better to improve your resume or skip the application.
 
-  Install the following libraries using `pip` inside your virtual environment:
+## 🔧 Requirements
 
-    - pip install pdfplumber
-    - pip install pyqt6
-    - pip install spacy
+- Only **PDF** documents are supported  
+- Only **German-language** PDFs are currently supported  
+- **Python 3** must be installed  
+- A **virtual environment** is strongly recommended
 
-  Download the necessary spaCy language models:
+## 🚀 Installation Guide
 
-    German language model
-    - python -m spacy download de_dep_news_trf
+### 1. Install Python
 
-    English language model (optional, for future use)
-    - python -m spacy download en_core_web_trf
+Download and install the latest version of Python from:  
+👉 [https://www.python.org](https://www.python.org)
 
- **🧱 Architecture Overview**
+### 2. Set up a virtual environment
+
+#### On **Linux**:
+
+    python3 -m venv venv
+    source venv/bin/activate
+
+
+#### On **Windows**:
+
+    python -m venv venv
+    venv\Scripts\activate
+
+## 📦 Required Python Libraries
+
+Install the libraries using `pip`:
+
+    pip install pdfplumber pyqt6 spacy
+
+### Download spaCy models:
+
+#### German (required):
+
+    python -m spacy download de_dep_news_trf
+
+#### English (optional):
+
+    python -m spacy download en_core_web_trf
+
+## 🧱 Architecture Overview
+
 
     GUI 
     └──> API 
@@ -50,30 +71,45 @@
           │            └──> C++ Calculations
           └──> GUI Output
 
-**🧪 How to Use**
+## 🧪 How to Use
 
-    1. Run api.py
-    2. Drag your PDF file in the drag and drop filed
-    3. Click on the button collect PDF
-    4. Paste in the job advertisment
-    5. Click on the button save jobadvertisment
-    6. Click on Save resume and job advertisment
+1. Run `api.py`
+2. Drag your PDF resume into the drag-and-drop field
+3. Click **Collect PDF**
+4. Paste the job advertisement into the input field
+5. Click **Save Job Advertisement**
+6. Click **Save Resume and Job Advertisement**
 
-**⚙️ How the Matching Score is Calculated**
+## ⚙️ How the Matching Score is Calculated
 
-  The score is computed based on content alignment between your resume and the job ad:
+The score is based on the **content alignment** between your resume and the job ad:
 
-  🔍 From Resume:
+### 🔍 From the Resume:
 
     * Programming and technical skills
     * Language proficiencies
     * Work experience
-    * Academic qualifications (school/university degrees)
+    * Academic qualifications
     * Hard and soft skills
     * Portfolio or project experience
 
-  📋 From Job Advertisement:
+### 📋 From the Job Advertisement:
 
-    * Explicitly required qualifications, skills, and experience
+* Required qualifications, skills, and experience
 
-  The actual matching score is computed by a performance-optimized script written in C++.
+    > ✅ The score is computed by a **performance-optimized C++ script**
+    > ⚠️ If your score is **below 50**, reconsider whether to apply for the job.
+    > 💡 The **higher** the score, the **better** the match.
+
+## 🛠 Planned Features
+
+    * 🌐 English language support
+    * 🖼 Improved UI
+    * 📊 Progress bar during score calculation
+    * 📈 Matching score output enhancements
+    *    Recruiter Modus
+
+## 🔒 Other Information
+
+    * All data is processed **locally**
+    * **No data is saved** in a database or uploaded online
