@@ -27,42 +27,58 @@ This can help you decide whether it’s worth applying — or if it may be bette
 
 ## 🚀 Installation Guide
 
-### 1. Install Python
+    ### 1. Install Python
 
-Download and install the latest version of Python from:  
-👉 [https://www.python.org](https://www.python.org)
+        Download and install the latest version of Python from:  
+        👉 [https://www.python.org](https://www.python.org)
 
-### 2. Set up a virtual environment
+    ### 2. Set up a virtual environment
 
-#### On **Linux**:
+    #### 🐧 On **Linux**:
 
-    python3 -m venv venv
-    source venv/bin/activate
+        python3 -m venv venv
+        source venv/bin/activate
 
+    #### 🪟 On **Windows**:
 
-#### On **Windows**:
+        python -m venv venv
+        venv\Scripts\activate
 
-    python -m venv venv
-    venv\Scripts\activate
+    ### 3. Install required Python libraries
 
-## 📦 Required Python Libraries
+        > ⚠️ **Important note:**
+        > Some spaCy components (e.g., `spacy-fastlang`) are currently not compatible with NumPy 2.x.
+        > To avoid errors, downgrade NumPy to version **1.26.4**:
+        
+        You can do this by type the following command in your terminal: pip install numpy==1.26.4
 
-Install the libraries using `pip`:
+        Now install the required libraries:
 
-    pip install pdfplumber pyqt6 spacy
+        #### 💻 GUI (Graphical User Interface)
 
-### Download spaCy models:
+            pip install pyqt6
 
-#### German (required):
+        #### 📄 PDF Extraction
 
-    python -m spacy download de_dep_news_trf
+            pip install pdfplumber
 
-#### English (optional):
+        #### 🤖 NLP Analysis
 
-    python -m spacy download en_core_web_trf
+            ##### Language Models (You need both if you want to work with German and English resumes):
+
+                    ###### 🇩🇪 German (required):
+
+                        python -m spacy download de_dep_news_trf
+
+                    ###### 🇬🇧 English (optional):
+
+                        python -m spacy download en_core_web_trf
+
+                ##### 🌐 Language Detection:
+
+                    pip install spacy_fastlang
 
 ## 🧱 Architecture Overview
-
 
     GUI 
     └──> API 
