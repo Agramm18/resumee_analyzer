@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
 import pdfplumber
 import sys
+
 print("\n")
 #drag and drop logic
 class DragAndDropField(QLabel):
@@ -145,13 +146,14 @@ class MainWindow(QMainWindow):
                 raise ValueError("There must be an pdf document so we can continue")
             
             else:
+                print("The programm has started now")
                 print("The pdf extraction is started")
                 with pdfplumber.open(resume_path) as pdf:
                     resume_text = ''
                     for page in pdf.pages:
                         resume_text += page.extract_text() or ''
 
-                    print("The pdf file is extracted now")
+                    print("The pdf file is extracted now \n")
                     self.resume_text = resume_text
 
         except ValueError as e:
@@ -180,9 +182,6 @@ class MainWindow(QMainWindow):
     #data collector for api  
     def final_output(self):
         if self.job_advertisment and self.resume_text:
-            print("Every value are saved")
-            print("Code Logic is working")
-            print("Scusess!! \n")
 
             #collect the data for the api
             from api import getData
@@ -191,6 +190,13 @@ class MainWindow(QMainWindow):
             #collect the data for spaCy
             from resume_nlp import collectDocument
             collector = collectDocument(doc=self.resume_text)
+            language = collector.language_detection()
+            
+            print("\n")
+            print("Every value are saved")
+            print("Code Logic is working")
+            print("Programm is working")
+            print("Scusess!! \n")
             
         else:
             print("There is somewhere an error")
