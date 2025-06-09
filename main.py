@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
 import pdfplumber
 import sys
-
+print("\n")
 #drag and drop logic
 class DragAndDropField(QLabel):
     def __init__(self):
@@ -42,7 +42,6 @@ class DragAndDropField(QLabel):
     
     #Collect the file path for logic
     def collect_path(self):
-        print(f"The file path from the drag enter event is: {self.file_path}")
         return self.file_path
 
 class MainWindow(QMainWindow):
@@ -146,6 +145,7 @@ class MainWindow(QMainWindow):
                 raise ValueError("There must be an pdf document so we can continue")
             
             else:
+                print("The pdf extraction is started")
                 with pdfplumber.open(resume_path) as pdf:
                     resume_text = ''
                     for page in pdf.pages:
@@ -169,7 +169,7 @@ class MainWindow(QMainWindow):
                 raise ValueError("We neeed an jobadvertisment so we can continue")
             
             else:
-                print(f"The job advertisment is: {job_data}")
+                print(f"The job advertisment is: {job_data} \n")
                 self.job_advertisment = job_data
 
         except ValueError as e:
@@ -187,9 +187,11 @@ class MainWindow(QMainWindow):
             #collect the data for the api
             from api import getData
             api_collector = getData(res_text=self.resume_text, job_adv=self.job_advertisment)
-            api_collector.store_pdf()
-            api_collector.store_job_adv()
 
+            #collect the data for spaCy
+            from resume_nlp import collectDocument
+            collector = collectDocument(doc=self.resume_text)
+            
         else:
             print("There is somewhere an error")
 
