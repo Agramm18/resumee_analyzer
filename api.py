@@ -16,12 +16,14 @@ from main import MainWindow
 from resume_nlp import collectDocument
 
 #values from the gui
+
+#collect the pdf and jobadvertisment from the gui
 class getData:
     def __init__(self, res_text, job_adv):
         self.res_text = res_text
         self.job_adv = job_adv
 
+#detect the language from the resume
 class languageDetection:
     def __init__(self, language):
         self.resume_language = language
-        
